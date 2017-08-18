@@ -44,3 +44,15 @@ eval()和Function构造不同的是eval()可以干扰作用域链，而Function(
 
 ## call、apply、bind传入null、undefined的情况
 手动改变this指针如果传入的是null或者是undefined,this会执行全局对象。
+
+## 变量提升优先于函数声明解析
+```javascript
+function a(x) {
+    return x * 2;
+}
+var a;
+alert(a);
+//function a(x) {
+//    return x * 2;
+//}
+```
