@@ -28,6 +28,7 @@
     当传递基本类型的值时，传递的是值的副本，毫无疑问。当传递的是引用类型的值时，传递的不是指针，而是一个跟指针指向相同内存地址的指针。
 
 ## eval()和Function的区别
+eval()和Function构造不同的是eval()可以干扰作用域链，而Function()更安分守己些。不管你在哪里执行 Function()，它只看到全局作用域。所以其能很好的避免本地变量污染。在下面这个例子中，eval()可以访问和修改它外部作用域中的变量，这是 Function做不来的（注意到使用Function和new Function是相同的）。
 ```javascript
 (function () {
    var local = 1;
