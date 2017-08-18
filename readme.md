@@ -26,3 +26,17 @@
 ## ECMAScript中的所有参数传递的都是值,不可能通过引用传递参数
     
     当传递基本类型的值时，传递的是值的副本，毫无疑问。当传递的是引用类型的值时，传递的不是指针，而是一个跟指针指向相同内存地址的指针。
+
+## eval()和Function的区别
+```javascript
+(function () {
+   var local = 1;
+   eval("local = 3; console.log(local)"); // logs "3"
+   console.log(local); // logs "3"
+}());
+
+(function () {
+   var local = 1;
+   Function("console.log(typeof local);")(); // logs undefined
+}());
+```
