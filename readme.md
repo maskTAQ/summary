@@ -41,3 +41,6 @@ eval()和Function构造不同的是eval()可以干扰作用域链，而Function(
    Function("console.log(typeof local);")(); // logs undefined
 }());
 ```
+
+## call、apply、bind传入null、undefined的情况
+手动改变this指针如果传入的是null或者是undefined,this会执行全局对象。
