@@ -99,6 +99,7 @@ export default App;
 ```
 上诉代码执行结果如下：
 ![](./img/react/init-render.png)
+
 可以得知props是在组件`constructor`后初始化的,值的来源可能是默认的也可能是父组件传的。
 
 #### 2.现在让我们改动下代码,在`componentWillMount`下`setState`。
@@ -114,6 +115,7 @@ componentWillMount() {
 ...
 ```
 ![](./img/react/change-state-in-componentWillMount.png)
+
 1. 在`componentWillMount`下`setState`并不会触发`shouldComponentUpdate`。
 2. 更新的state并不能立即生效,在下一个周期之后才会生效。
 
@@ -140,6 +142,7 @@ render() {
 ```
 ![](./img/react/change-state-in-render-1.png)
 ![](./img/react/change-state-in-render-2.png)
+
 首先这是禁止的但是为了彻底搞清楚内在的逻辑,我还是这么做了。利用了if限制了一下更新条件不然会陷入死循环。
 1. 多次修改的state会合并。
 2. 更新的state并不能立即生效,在组件初始化的周期链之后才会生效。
@@ -158,6 +161,7 @@ componentDidMount() {
 ...
 ```
 ![](./img/react/change-state-in-componentDidMount.png)
+
 1. 更新的state并不能立即生效,在下一个周期之后才会生效。
 2. 触发了链条2的生命周期链条。
 
@@ -190,6 +194,7 @@ componentDidMount() {
 ```
 ![](./img/react/change-state-in-componentWillUpdate-1.png.png)
 ![](./img/react/change-state-in-componentWillUpdate-2.png.png)
+
 1. 每次setState都会走一遍更新周期函数链。
 2. setState的state值在下一个周期链才开始生效。
 
@@ -243,7 +248,6 @@ componentDidMount() {
 ...
 ```
 ![](.img/react/change-state-in-shouldComponentUpdate.png)
-
 
 #### 总结
 1. 在初始化周期函数链中setState,除了`componentWillMount`与之前的state合并就像在`constructor`中初始化一样,其他的周期函数都会在更新周期函数链[链条2]中获取到先前设置的state。
