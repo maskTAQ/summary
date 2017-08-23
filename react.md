@@ -195,7 +195,7 @@ componentDidMount() {
 ...
 ```
 ![](./img/react/change-state-in-componentWillUpdate-1.png)
-![](./img/react/change-state-in-componentWillUpdate-1.png)
+![](./img/react/change-state-in-componentWillUpdate-2.png)
 
 1. 每次setState都会走一遍更新周期函数链。
 2. setState的state值在下一个周期链才开始生效。[这里没有比较setState前后的state值了]
