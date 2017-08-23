@@ -179,7 +179,7 @@ componentWillUpdate(nextProps, nextState) {
         props: nextProps
       }, 'componentWillUpdate');
 
-      if(this.state.test != 3){
+      if(nextState.test != 3){
         this.setState({
           test:3
         });
