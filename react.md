@@ -98,6 +98,7 @@ export default App;
 
 ```
 上诉代码执行结果如下：
+
 ![](./img/react/init-render.png)
 
 可以得知props是在组件`constructor`后初始化的,值的来源可能是默认的也可能是父组件传的。
@@ -116,14 +117,14 @@ componentWillMount() {
 ```
 ![](./img/react/change-state-in-componentWillMount.png)
 
-1. 在`componentWillMount`下`setState`并不会触发`shouldComponentUpdate`。
-2. 更新的state并不能立即生效,在下一个周期之后才会生效。
+1. 在`componentWillMount`下`setState`并不会触发`shouldComponentUpdate`,而是将设置的state与之前初始化的state合并,就像刚开始一起初始化的一样。
+2. 更新的state并不能立即生效,在下一个周期之后[也就是render]才会生效。
 
 #### 3.在`render`下`setState`。
 ```javascript
 ...
 render() {
-    this.log('render')
+    this.log('render-1')
     if(this.state.test != 2){
       this.setState({
         test:3
@@ -131,22 +132,23 @@ render() {
       this.setState({
         test:2
       });
+      this.log('render-2')
     }
-    return (
+     return (
       <div className="App">
         text
       </div>
     );
-  }
+}
 ...
 ```
 ![](./img/react/change-state-in-render-1.png)
 ![](./img/react/change-state-in-render-2.png)
 
 首先这是禁止的但是为了彻底搞清楚内在的逻辑,我还是这么做了。利用了if限制了一下更新条件不然会陷入死循环。
-1. 多次修改的state会合并。
+1. 同一个函数多次修改的state会合并。
 2. 更新的state并不能立即生效,在组件初始化的周期链之后才会生效。
-3. 触发了链条2的生命周期链条。
+3. 等上一个周期链结束后触发了链条2的生命周期链条。
 
 #### 4.在`componentDidMount`下`setState`。
 ```javascript
@@ -163,10 +165,10 @@ componentDidMount() {
 ![](./img/react/change-state-in-componentDidMount.png)
 
 1. 更新的state并不能立即生效,在下一个周期之后才会生效。
-2. 触发了链条2的生命周期链条。
+2. 等上一个周期链结束后触发了链条2的生命周期链条。
 
 #### 5.在`componentWillUpdate`下`setState`。
-首先想一下会发生什么?跟`componentWillMount`一样吗?好像差不读。可是这个周期压根就不会触发。我们现在`componentDidMount`中setState一下。
+首先想一下会发生什么?跟`componentWillMount`一样吗?嗯,应该差不多。可是这个周期压根就不会触发。我们现在`componentDidMount`中setState一下。
 ```javascript
 ...
 componentWillUpdate(nextProps, nextState) {
@@ -192,11 +194,11 @@ componentDidMount() {
   }
 ...
 ```
-![](./img/react/change-state-in-componentWillUpdate-1.png.png)
-![](./img/react/change-state-in-componentWillUpdate-2.png.png)
+![](./img/react/change-state-in-componentWillUpdate-1.png)
+![](./img/react/change-state-in-componentWillUpdate-1.png)
 
 1. 每次setState都会走一遍更新周期函数链。
-2. setState的state值在下一个周期链才开始生效。
+2. setState的state值在下一个周期链才开始生效。[这里没有比较setState前后的state值了]
 
 #### 6.在`componentDidUpdate`下`setState`。
 首先想一下会发生什么?跟`componentWillUpdate`一样吗?是的是一样的。
@@ -250,6 +252,6 @@ componentDidMount() {
 ![](.img/react/change-state-in-shouldComponentUpdate.png)
 
 #### 总结
-1. 在初始化周期函数链中setState,除了`componentWillMount`与之前的state合并就像在`constructor`中初始化一样,其他的周期函数都会在更新周期函数链[链条2]中获取到先前设置的state。
+1. 在初始化周期函数链中setState,除了`componentWillMount`会与初始化的state合并,就像在`constructor`中初始化一样。其他的周期函数setState都只能在下一个周期链中拿到上一个周期链setState设置的state。
 2. 在更新周期函数链[链条2]中setState[如果你设置state不加以判断的话会陷入死循环]会将这个链条执行完毕之后,在执行一次更新周期函数链并拿到先前设置的state。
 3. 避免在生命周期中state,除非你万不得已的时候。
