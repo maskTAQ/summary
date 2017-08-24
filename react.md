@@ -292,7 +292,12 @@ class Layer extends Component {
         // @param {nextElement} 要插入到DOM中的组件
         // @param {container} 要插入到的容器
         // @param {callback} 第一次渲染为null
-        unstable_renderSubtreeIntoContainer(this, this.props.children, document.getElementById('test'));
+        if (!this.container) {
+            this.container = document.createElement('div');
+            this.container.id = 'test';
+            document.body.appendChild(this.container);
+        }
+        unstable_renderSubtreeIntoContainer(this, this.props.children, this.container);
     }
     render() {
         return null
