@@ -251,7 +251,7 @@ componentDidMount() {
 ```
 ![](.img/react/change-state-in-shouldComponentUpdate.png)
 
-#### 7. 异步`setState`。
+#### 8. 异步`setState`。
 ```javascript
 ...
 componentDidMount() {
@@ -274,3 +274,61 @@ componentDidMount() {
 2. 在更新周期函数链[链条2]中setState[如果你设置state不加以判断的话会陷入死循环]会将这个链条执行完毕之后,在执行一次更新周期函数链并拿到先前设置的state。
 3. 避免在生命周期中state,除非你万不得已的时候。
 4. 增加了异步setState的情况,会在本次周期链结束后调用更新周期链。
+
+
+## reactDom.unstable_renderSubtreeIntoContainer
+当需要实现一个弹出层组件时,往往需要在document.body中直接渲染。
+
+- [x] Layer组件粗略实现
+- [ ] unstable_renderSubtreeIntoContainer传入的第一个parentComponent的作用
+
+```javascript
+import React, {Component} from 'react';
+import {unstable_renderSubtreeIntoContainer} from 'react-dom';
+
+class Layer extends Component {
+    renderModal() {
+        // @param {parentComponent} 父组件
+        // @param {nextElement} 要插入到DOM中的组件
+        // @param {container} 要插入到的容器
+        // @param {callback} 第一次渲染为null
+        unstable_renderSubtreeIntoContainer(this, this.props.children, document.getElementById('test'));
+    }
+    render() {
+        return null
+    }
+    componentDidMount() {
+        this.renderModal();
+    }
+    componentDidUpdate() {
+        this.renderModal();
+    }
+}
+class App extends Component {
+    constructor() {
+        super();
+        this.state = {
+            test: 1
+        }
+    }
+
+    render() {
+        return (
+            <div className="App">
+                root{JSON.stringify(this.state)}
+                <Layer>
+                    <div className="modal">test modal {JSON.stringify(this.state)}</div>
+                </Layer>
+            </div>
+        );
+    }
+    componentDidMount() {
+        setTimeout(() => {
+            this.setState({test: 2})
+        }, 1000)
+    }
+}
+
+export default App;
+
+```
