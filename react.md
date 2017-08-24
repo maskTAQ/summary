@@ -251,7 +251,26 @@ componentDidMount() {
 ```
 ![](.img/react/change-state-in-shouldComponentUpdate.png)
 
+#### 7. 异步`setState`。
+```javascript
+...
+componentDidMount() {
+    this.log('componentDidMount-1');
+    this.setState({test: 2});
+    setTimeout(()=>{
+      this.setState({
+        test:3
+      });
+    },1000)
+    this.log('componentDidMount-2')
+}
+...
+```
+![](.img/react/异步setState-1.png)
+![](.img/react/异步setState-2.png)
+
 #### 总结
 1. 在初始化周期函数链中setState,除了`componentWillMount`会与初始化的state合并,就像在`constructor`中初始化一样。其他的周期函数setState都只能在下一个周期链中拿到上一个周期链setState设置的state。
 2. 在更新周期函数链[链条2]中setState[如果你设置state不加以判断的话会陷入死循环]会将这个链条执行完毕之后,在执行一次更新周期函数链并拿到先前设置的state。
 3. 避免在生命周期中state,除非你万不得已的时候。
+4. 增加了异步setState的情况,会在本次周期链结束后调用更新周期链。
