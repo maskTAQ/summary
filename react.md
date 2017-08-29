@@ -266,8 +266,8 @@ componentDidMount() {
 }
 ...
 ```
-![](.img/react/异步setState-1.png)
-![](.img/react/异步setState-2.png)
+![](.img/react/asyn-setState-1.png)
+![](.img/react/asyn-setState-2.png)
 
 #### 总结
 1. 在初始化周期函数链中setState,除了`componentWillMount`会与初始化的state合并,就像在`constructor`中初始化一样。其他的周期函数setState都只能在下一个周期链中拿到上一个周期链setState设置的state。
@@ -337,3 +337,6 @@ class App extends Component {
 export default App;
 
 ```
+
+## react合成事件机制
+react事件并不会绑定到对应的节点上,而是绑定对应组件结构的最外层,使用一个统一的事件监听器,这个事件监听器维持了一个映射来保存所有组件内部的事件监听和处理函数，当事件发生时。首先被这个统一的事件监听器处理，然后在映射里找到真正的事件处理函数并调用。
