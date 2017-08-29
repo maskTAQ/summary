@@ -249,7 +249,7 @@ componentDidMount() {
   }
 ...
 ```
-![](.img/react/change-state-in-shouldComponentUpdate.png)
+![](./img/react/change-state-in-shouldComponentUpdate.png)
 
 #### 8. 异步`setState`。
 ```javascript
@@ -266,8 +266,8 @@ componentDidMount() {
 }
 ...
 ```
-![](.img/react/asyn-setState-1.png)
-![](.img/react/asyn-setState-2.png)
+![](./img/react/asyn-setState-1.png)
+![](./img/react/asyn-setState-2.png)
 
 #### 总结
 1. 在初始化周期函数链中setState,除了`componentWillMount`会与初始化的state合并,就像在`constructor`中初始化一样。其他的周期函数setState都只能在下一个周期链中拿到上一个周期链setState设置的state。
