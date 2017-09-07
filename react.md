@@ -340,3 +340,8 @@ export default App;
 
 ## react合成事件机制
 react事件并不会绑定到对应的节点上,而是绑定对应组件结构的最外层,使用一个统一的事件监听器,这个事件监听器维持了一个映射来保存所有组件内部的事件监听和处理函数，当事件发生时。首先被这个统一的事件监听器处理，然后在映射里找到真正的事件处理函数并调用。
+
+# react-redux
+
+## reducer中修改state，不会触发render
+reducer中直接对state进行修改，state是引用，store内部的state同样也就变了，这样导致React-Redux认为dispatch前后state没有改变，就不会重新渲染UI，实际state已经改变。
