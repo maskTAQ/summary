@@ -168,7 +168,8 @@ componentDidMount() {
 2. 等上一个周期链结束后触发了链条2的生命周期链条。
 
 #### 5.在`componentWillUpdate`下`setState`。
-首先想一下会发生什么?跟`componentWillMount`一样吗?嗯,应该差不多。可是这个周期压根就不会触发。我们现在`componentDidMount`中setState一下。
+首先想一下会发生什么?跟`componentWillMount`一样吗?嗯,应该差不多。可是这个周期压根就不会触发。我们先在`componentDidMount`中setState一下。
+这里传入的`nextState`可以篡改用以下个组件的state[不知道官方是否建议这样]
 ```javascript
 ...
 componentWillUpdate(nextProps, nextState) {
