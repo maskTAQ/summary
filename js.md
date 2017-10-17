@@ -57,3 +57,6 @@ alert(a);
 ```
 ## 立即执行的函数表达式的原理
 告诉解析器function声明为表达式就可以,这样就可以直接调用表达式。你可以通过`()`或操作费`! + = ~ || ...`来告诉解析器。
+
+## advantages of requestAnimationFrame
+requestAnimationFrame has a number of advantages. Perhaps the most important one is that it pauses when the user navigates to another browser tab, hence not wasting their precious processing power and battery life.but `setInterval` conld't
