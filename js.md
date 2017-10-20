@@ -88,3 +88,7 @@ console.log( Object.getPrototypeOf( a ) === Person.prototype ); // 输出：true
 var a = objectFactory( A, 'sven' );
 var a = new A( 'sven' );
 ```
+
+## Object.create(null)创建没有原型的对象
+js中除了根对象 Object.prototype 本身之外，任何对象都会有一个
+原型。而通过 Object.create( null ) 可以创建出没有原型的对象。
