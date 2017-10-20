@@ -60,3 +60,31 @@ alert(a);
 
 ## advantages of requestAnimationFrame
 requestAnimationFrame has a number of advantages. Perhaps the most important one is that it pauses when the user navigates to another browser tab, hence not wasting their precious processing power and battery life.but `setInterval` conld't
+
+## 模仿new的实现
+借用浏览器暴露的`__proto__`接口实现new的过程
+
+```javascript
+function Person(name){
+    this.name = name;
+}
+Person.prototype.getName = function(){
+    return this.name
+};
+
+var objectFactory = function(){
+    var obj = {},
+    Constructor = [].shift.call(arguments);
+    obj.__proto__ = Constructor.prototype;
+
+    var ref = Constructor.apply(obj,arguments);
+    return typeof ret === 'object' ? ret : obj; 
+}
+
+var a = objectFactory( Person, 'sven' );
+console.log( a.name ); // 输出：sven
+console.log( a.getName() ); // 输出：sven
+console.log( Object.getPrototypeOf( a ) === Person.prototype ); // 输出：true
+var a = objectFactory( A, 'sven' );
+var a = new A( 'sven' );
+```
