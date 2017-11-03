@@ -92,3 +92,6 @@ var a = new A( 'sven' );
 ## Object.create(null)创建没有原型的对象
 js中除了根对象 Object.prototype 本身之外，任何对象都会有一个
 原型。而通过 Object.create( null ) 可以创建出没有原型的对象。
+
+## [void操作符](https://segmentfault.com/a/1190000000474941)
+无论void后的表达式是什么，void操作符都会返回undefined,undefined在javascript中不是保留字
